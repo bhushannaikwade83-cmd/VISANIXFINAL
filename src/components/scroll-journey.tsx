@@ -3,8 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/page-primitives";
-import journey from "@/assets/visanix-journey.webm.asset.json";
-import journeyMp4 from "@/assets/visanix-journey.mp4.asset.json";
 import poster from "@/assets/visanix-journey-poster.jpg.asset.json";
 
 const chapters = [
@@ -16,69 +14,135 @@ const chapters = [
   { start: 12.1, end: 13.6, tag: "Chapter 06 — VisaNix", heading: "Start Your Global Journey." },
 ];
 
+const FRAME_COUNT = 219;
+const DURATION = 18.25;
+const KEEP = 90;
+const AHEAD = 24;
+const frameUrl = (i: number) => `/frames/journey/f_${String(i + 1).padStart(4, "0")}.webp`;
+
 export function ScrollJourney() {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [chapter, setChapter] = useState(-1);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const section = sectionRef.current;
-    const video = videoRef.current;
-    if (!section || !video) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!section || !canvas || !ctx) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0;
-    let progress = 0;
+    const blobs: (Blob | undefined)[] = new Array(FRAME_COUNT);
+    const pending = new Set<number>();
+    const bitmaps = new Map<number, ImageBitmap>();
+    const decoding = new Set<number>();
     let disposed = false;
-    const seek = () => {
-      if (disposed || video.readyState < 2 || !Number.isFinite(video.duration) || video.seeking) return;
-      const target = reduced.matches ? 0 : progress * video.duration;
-      const time = Math.min(target, Math.max(0, video.duration - 1 / 24));
-      if (Math.abs(video.currentTime - time) > 1 / 48) {
-        // A browser can temporarily reject a seek while new media data arrives.
-        // Keep the latest scroll position and retry on the next readiness event.
-        try { video.currentTime = time; } catch { /* Retried when media is ready. */ }
+    let raf = 0;
+    let progress = 0;
+    let smooth = 0;
+    let dir = 1;
+    let shown = -1;
+    let last = performance.now();
+    let lastChapter = -2;
+
+    const fetchBlob = async (i: number) => {
+      if (blobs[i] || pending.has(i)) return;
+      pending.add(i);
+      try {
+        const res = await fetch(frameUrl(i));
+        if (!res.ok) throw new Error(String(res.status));
+        blobs[i] = await res.blob();
+      } catch {
+        if (i === 0 && !disposed) setFailed(true);
+      } finally { pending.delete(i); }
+    };
+    const decode = async (i: number) => {
+      if (bitmaps.has(i) || decoding.has(i)) return;
+      if (!blobs[i]) { void fetchBlob(i); return; }
+      decoding.add(i);
+      try {
+        const bitmap = await createImageBitmap(blobs[i]!);
+        if (disposed) bitmap.close(); else bitmaps.set(i, bitmap);
+      } catch { /* retried on the next tick */ }
+      decoding.delete(i);
+    };
+    const nearest = (i: number) => {
+      if (bitmaps.has(i)) return i;
+      for (let d = 1; d < FRAME_COUNT; d++) {
+        if (bitmaps.has(i - d)) return i - d;
+        if (bitmaps.has(i + d)) return i + d;
       }
+      return -1;
     };
-    const update = () => {
-      frame = 0;
-      const rect = section.getBoundingClientRect();
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      shown = -1;
+    };
+    const draw = (i: number) => {
+      const j = nearest(i);
+      if (j < 0) return;
+      const bmp = bitmaps.get(j)!;
+      const s = Math.max(canvas.width / bmp.width, canvas.height / bmp.height);
+      const w = bmp.width * s, h = bmp.height * s;
+      ctx.drawImage(bmp, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+      shown = j;
+    };
+    const readProgress = () => {
       const distance = Math.max(1, section.offsetHeight - window.innerHeight);
-      progress = Math.max(0, Math.min(1, -rect.top / distance));
-      const target = reduced.matches ? 0 : progress * (Number.isFinite(video.duration) ? video.duration : 18.25);
-      section.dataset["progress"] = String(progress);
-      setChapter(reduced.matches ? -1 : chapters.findIndex(c => target >= c.start && target < c.end));
-      seek();
+      return Math.max(0, Math.min(1, -section.getBoundingClientRect().top / distance));
     };
-    const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
-    const readinessEvents = ["loadedmetadata", "loadeddata", "canplay", "progress"];
-    readinessEvents.forEach(event => video.addEventListener(event, schedule));
-    video.addEventListener("seeked", seek);
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    window.addEventListener("pageshow", schedule);
-    document.addEventListener("visibilitychange", schedule);
-    reduced.addEventListener("change", schedule);
-    schedule();
+    const tick = (now: number) => {
+      raf = window.requestAnimationFrame(tick);
+      const dt = Math.min((now - last) / 1000, .5) || .016;
+      last = now;
+      const next = reduced.matches ? 0 : readProgress();
+      if (next !== progress) dir = next >= progress ? 1 : -1;
+      progress = next;
+      section.dataset["progress"] = String(progress);
+      const seconds = progress * DURATION;
+      const active = reduced.matches ? -1 : chapters.findIndex(c => seconds >= c.start && seconds < c.end);
+      if (active !== lastChapter) { lastChapter = active; setChapter(active); }
+      const target = progress * (FRAME_COUNT - 1);
+      smooth += (target - smooth) * (1 - Math.exp(-dt * 14));
+      if (Math.abs(target - smooth) < .5) smooth = target;
+      const i = Math.round(smooth);
+      for (let d = 0; d <= AHEAD; d++) {
+        const ahead = i + d * dir, behind = i - Math.min(d, 6) * dir;
+        if (ahead >= 0 && ahead < FRAME_COUNT) void decode(ahead);
+        if (behind >= 0 && behind < FRAME_COUNT) void decode(behind);
+      }
+      if (bitmaps.size > KEEP * 2) {
+        for (const [index, bitmap] of bitmaps) if (Math.abs(index - i) > KEEP) { bitmap.close(); bitmaps.delete(index); }
+      }
+      if (i !== shown || shown === -1) draw(i);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    raf = window.requestAnimationFrame(tick);
+    void (async () => {
+      const eager = Array.from({ length: 30 }, (_, i) => fetchBlob(i));
+      await Promise.all(eager);
+      let next = 30;
+      await Promise.all(Array.from({ length: 4 }, async () => {
+        while (!disposed && next < FRAME_COUNT) await fetchBlob(next++);
+      }));
+    })();
     return () => {
       disposed = true;
-      window.cancelAnimationFrame(frame);
-      readinessEvents.forEach(event => video.removeEventListener(event, schedule));
-      video.removeEventListener("seeked", seek);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      window.removeEventListener("pageshow", schedule);
-      document.removeEventListener("visibilitychange", schedule);
-      reduced.removeEventListener("change", schedule);
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+      bitmaps.forEach(bitmap => bitmap.close());
+      bitmaps.clear();
     };
   }, []);
   return <>
     <section ref={sectionRef} className="scroll-journey" aria-label="The VisaNix journey, start to finish">
       <div className="journey-stage">
-        {failed ? <img className="journey-film" src={poster.url} alt="VisaNix animated travel journey" /> :
-          <video ref={videoRef} className="journey-film" poster={poster.url} muted playsInline preload="auto" onError={event => { if (event.target === event.currentTarget) setFailed(true); }} aria-label="Animated traveller meeting a visa consultant and preparing travel documents">
-            <source src={journeyMp4.url} type="video/mp4" />
-            <source src={journey.url} type="video/webm" />
-          </video>}
+        {failed
+          ? <img className="journey-film" src={poster.url} alt="VisaNix animated travel journey" />
+          : <canvas ref={canvasRef} className="journey-film" role="img" style={{ backgroundImage: `url(${poster.url})`, backgroundSize: "cover", backgroundPosition: "center" }} aria-label="Animated traveller meeting a visa consultant and preparing travel documents" />}
         <div className="journey-shade" />
         {chapters.map((c, index) => <div key={c.tag} className={`journey-caption${chapter === index ? " is-active" : ""}`} aria-hidden={chapter !== index}>
           <span>{c.tag}</span><h2>{c.heading}</h2>
