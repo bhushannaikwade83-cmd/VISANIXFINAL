@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
+  useRouterState,
   Link,
   createRootRouteWithContext,
   useRouter,
@@ -127,6 +128,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   const [entranceReady, setEntranceReady] = useState(false);
+  const isJourney = useRouterState({ select: state => state.location.pathname === "/" });
 
   useEffect(() => {
     let active = true;
@@ -145,7 +147,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <Header />
       <MotionLayer />
-      <main>{entranceReady ? <Outlet /> : <ScrollJourney />}</main>
+      <main>{!entranceReady || isJourney ? <ScrollJourney /> : <Outlet />}</main>
       <Footer />
     </QueryClientProvider>
   );

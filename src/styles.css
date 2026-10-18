@@ -62,3 +62,10 @@
 @media(max-width:1000px){.journey-caption h2{font-size:2.5rem}}
 @media(max-width:640px){:root{--journey-nav-height:64px}.journey-caption{left:14px;right:14px;bottom:130px}.journey-caption h2{font-size:2rem}.journey-caption span{font-size:.65rem}.journey-explore{bottom:66px;right:14px}.journey-disclaimer{left:14px;right:14px;bottom:12px;font-size:.6rem}.journey-closing{padding:65px 0}.journey-closing h2{font-size:2.5rem}}
 @media(prefers-reduced-motion:reduce){.scroll-journey{height:100svh}.journey-caption,.route-veil{display:none}}
+
+/* Home story: heading on its own row, copy + image below; long accent line wraps */
+.dark-story .split{grid-template-columns:1fr 1fr;align-items:start}
+.dark-story .split>div:first-child{grid-column:1/-1;min-width:0}
+.dark-story h2 .script-word{white-space:normal;display:block}
+.dark-story .story-copy{align-self:center}
+@media(max-width:1000px){.dark-story .split{grid-template-columns:1fr}}

@@ -11,3 +11,4 @@
 - [x] Connect Explore Full Website to the complete existing VisaNix website
 - [x] Verify animation, navigation and footer end-to-end
 - [x] Ensure every fresh website opening shows the video first and verify subsequent navigation
+- [x] Recover scroll video after delayed loading and verify reverse scrolling
