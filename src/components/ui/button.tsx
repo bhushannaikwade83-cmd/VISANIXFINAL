@@ -9,15 +9,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-[0_12px_32px_rgba(196,169,97,0.4)]",
+        default: "bg-hero !text-white shadow-lg hover:bg-hero/90 hover:shadow-[0_12px_32px_rgba(21,79,157,0.4)]",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border-2 border-hero text-hero bg-transparent hover:bg-hero/10 hover:text-hero font-semibold transition-all duration-300 shadow-sm hover:shadow-md",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(196,169,97,0.5)]",
+        link: "text-hero underline-offset-4 hover:underline",
+        hero: "bg-gradient-to-br from-hero to-hero/80 !text-white shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 font-bold tracking-wide border border-hero/50",
         ivory: "border border-hero-foreground/40 bg-transparent text-hero-foreground hover:bg-hero-foreground hover:text-hero",
+        gold: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-[0_12px_32px_rgba(196,169,97,0.5)]",
       },
       size: {
         default: "h-9 px-4 py-2",
