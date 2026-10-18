@@ -85,6 +85,8 @@ export function ScrollJourney() {
       const bmp = bitmaps.get(j)!;
       const s = Math.max(canvas.width / bmp.width, canvas.height / bmp.height);
       const w = bmp.width * s, h = bmp.height * s;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.drawImage(bmp, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
       shown = j;
     };
