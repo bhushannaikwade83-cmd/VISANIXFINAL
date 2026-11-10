@@ -151,3 +151,8 @@
 .brand-link:hover .brand-plate,.brand-link:focus-visible .brand-plate,.footer .brand-plate:hover{background:var(--warm-ivory);border-color:var(--primary)}
 .brand-link:hover .brand-venture,.brand-link:focus-visible .brand-venture,.footer .brand-plate:hover .brand-venture{color:var(--hero)}
 .footer .brand-plate:hover .brand-imgs .brand-logo:not(.is-color){opacity:0}.footer .brand-plate:hover .brand-imgs .is-color{opacity:1}
+
+/* Video page: same floating menu, logo on the left, video fills the screen */
+.float-logo.is-left{right:auto;left:clamp(12px,2.4vw,32px)}
+.site-shell.is-journey{--journey-nav-height:0px}
+@media(max-width:640px){.site-shell.is-journey .float-menu-btn:not(.side-close){bottom:72px}}

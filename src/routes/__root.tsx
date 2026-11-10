@@ -144,7 +144,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={!entranceReady || isJourney ? "site-shell" : "site-shell"}>
+      <div className={!entranceReady || isJourney ? "site-shell is-journey" : "site-shell"}>
         <Header />
         <MotionLayer />
         <main>{!entranceReady || isJourney ? <ScrollJourney /> : <Outlet />}</main>

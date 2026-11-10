@@ -1,7 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import logoColor from "@/assets/visanix-logo-mark.png";
 import logoWhite from "@/assets/visanix-logo-mark-white.png";
 
@@ -58,15 +57,8 @@ function SideNav({ pathname, onNavigate }: { pathname: string; onNavigate: () =>
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: state => state.location.pathname });
   const journey = pathname === "/";
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
   useEffect(() => { setOpen(false); }, [pathname]);
   useEffect(() => {
     if (!open) return;
@@ -76,30 +68,8 @@ export function Header() {
   }, [open]);
   const close = () => setOpen(false);
 
-  if (journey) {
-    return <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
-      <div className="site-container nav-shell">
-        <Link to="/" aria-label="VisaNix home" className="brand-link"><Wordmark venture /></Link>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          <Link to="/home">Home</Link>
-          <div className="nav-dropdown"><Link to="/visanix">Visanix <ChevronDown /></Link><div className="nav-dropdown-panel">
-            {visanixGroup.items.map(item => <Link key={item.to} to={item.to}>{item.label}</Link>)}
-          </div></div>
-          <Link to="/destinations">Destinations</Link><Link to="/partners">Partners</Link>
-          <div className="nav-dropdown"><Link to="/trouvaille">Trouvaille <ChevronDown /></Link><div className="nav-dropdown-panel">
-            {trouvailleGroup.items.map(item => <Link key={item.to} to={item.to}>{item.label}</Link>)}
-          </div></div>
-          <Link to="/about">About Us</Link><Link to="/faq">FAQ&rsquo;s</Link>
-        </nav>
-        <Button asChild variant="hero" size="sm" className="desktop-contact"><Link to="/contact">Contact us</Link></Button>
-        <Button variant="ghost" size="icon" className="mobile-menu-button" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
-      </div>
-      {open && <nav className="mobile-nav" aria-label="Mobile navigation"><SideNav pathname={pathname} onNavigate={close} /></nav>}
-    </header>;
-  }
-
   return <>
-    <Link to="/" aria-label="VisaNix home" className="float-logo"><Wordmark venture /></Link>
+    <Link to="/" aria-label="VisaNix home" className={`float-logo${journey ? " is-left" : ""}`}><Wordmark venture /></Link>
     <button type="button" className={`float-menu-btn${open ? " is-hidden" : ""}`} aria-label="Open menu" aria-expanded={open} onClick={() => setOpen(true)}><span /><span /></button>
     {open && <button type="button" className="side-backdrop" aria-label="Close menu" onClick={close} />}
     <aside className={`side-nav${open ? " is-open" : ""}`} aria-hidden={!open}>
