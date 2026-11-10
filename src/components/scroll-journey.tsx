@@ -83,11 +83,20 @@ export function ScrollJourney() {
       const j = nearest(i);
       if (j < 0) return;
       const bmp = bitmaps.get(j)!;
-      const s = Math.max(canvas.width / bmp.width, canvas.height / bmp.height);
-      const w = bmp.width * s, h = bmp.height * s;
+      const cw = canvas.width, ch = canvas.height;
+      const cover = Math.max(cw / bmp.width, ch / bmp.height);
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(bmp, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+      if (cw / ch < 1.1) {
+        // Portrait screens: show the whole frame, fill the rest with a dimmed enlarged copy.
+        ctx.drawImage(bmp, (cw - bmp.width * cover) / 2, (ch - bmp.height * cover) / 2, bmp.width * cover, bmp.height * cover);
+        ctx.fillStyle = "rgba(8, 12, 32, 0.62)";
+        ctx.fillRect(0, 0, cw, ch);
+        const fit = cw / bmp.width;
+        ctx.drawImage(bmp, 0, (ch - bmp.height * fit) / 2, bmp.width * fit, bmp.height * fit);
+      } else {
+        ctx.drawImage(bmp, (cw - bmp.width * cover) / 2, (ch - bmp.height * cover) / 2, bmp.width * cover, bmp.height * cover);
+      }
       shown = j;
     };
     const readProgress = () => {

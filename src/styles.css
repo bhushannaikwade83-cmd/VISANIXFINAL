@@ -156,3 +156,12 @@
 .float-logo.is-left{right:auto;left:clamp(12px,2.4vw,32px)}
 .site-shell.is-journey{--journey-nav-height:0px}
 @media(max-width:640px){.site-shell.is-journey .float-menu-btn:not(.side-close){bottom:72px}}
+
+@media(max-aspect-ratio:11/10){.journey-film:is(img){object-fit:contain;background:var(--hero)}}
+
+/* Mobile: never let headings or script words run off the screen */
+@media(max-width:640px){
+ .script-word{white-space:normal;overflow-wrap:anywhere;font-size:1.12em}
+ .page-hero h1{font-size:clamp(2.1rem,10.5vw,3.2rem)}
+ main h1,main h2{overflow-wrap:break-word}
+}
