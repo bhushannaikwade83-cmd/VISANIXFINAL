@@ -95,7 +95,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-       { rel: "preload", as: "image", href: "/src/assets/visanix-logo.png" },
        { rel: "icon", href: "/favicon.ico" },
        { rel: "icon", href: "/favicon.png", type: "image/png" },
        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
@@ -145,10 +144,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <MotionLayer />
-      <main>{!entranceReady || isJourney ? <ScrollJourney /> : <Outlet />}</main>
-      <Footer />
+      <div className={!entranceReady || isJourney ? "site-shell" : "site-shell"}>
+        <Header />
+        <MotionLayer />
+        <main>{!entranceReady || isJourney ? <ScrollJourney /> : <Outlet />}</main>
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }

@@ -15,12 +15,21 @@ import { Route as ApostilleAttestationRouteImport } from './routes/apostille-att
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FeaturedProjectsRouteImport } from './routes/featured-projects'
+import { Route as FlightsAndStayRouteImport } from './routes/flights-and-stay'
+import { Route as HolidayPackagesRouteImport } from './routes/holiday-packages'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as MeetAndAssistRouteImport } from './routes/meet-and-assist'
+import { Route as MiceRouteImport } from './routes/mice'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PassportServicesRouteImport } from './routes/passport-services'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as TravelInsuranceRouteImport } from './routes/travel-insurance'
 import { Route as TrouvailleRouteImport } from './routes/trouvaille'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as VisaServicesRouteImport } from './routes/visa-services'
+import { Route as VisanixRouteImport } from './routes/visanix'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,9 +61,39 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturedProjectsRoute = FeaturedProjectsRouteImport.update({
+  id: '/featured-projects',
+  path: '/featured-projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlightsAndStayRoute = FlightsAndStayRouteImport.update({
+  id: '/flights-and-stay',
+  path: '/flights-and-stay',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HolidayPackagesRoute = HolidayPackagesRouteImport.update({
+  id: '/holiday-packages',
+  path: '/holiday-packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetAndAssistRoute = MeetAndAssistRouteImport.update({
+  id: '/meet-and-assist',
+  path: '/meet-and-assist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MiceRoute = MiceRouteImport.update({
+  id: '/mice',
+  path: '/mice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnersRoute = PartnersRouteImport.update({
@@ -62,9 +101,19 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PassportServicesRoute = PassportServicesRouteImport.update({
+  id: '/passport-services',
+  path: '/passport-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelInsuranceRoute = TravelInsuranceRouteImport.update({
+  id: '/travel-insurance',
+  path: '/travel-insurance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrouvailleRoute = TrouvailleRouteImport.update({
@@ -82,6 +131,11 @@ const VisaServicesRoute = VisaServicesRouteImport.update({
   path: '/visa-services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisanixRoute = VisanixRouteImport.update({
+  id: '/visanix',
+  path: '/visanix',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,12 +144,21 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
   '/faq': typeof FaqRoute
+  '/featured-projects': typeof FeaturedProjectsRoute
+  '/flights-and-stay': typeof FlightsAndStayRoute
+  '/holiday-packages': typeof HolidayPackagesRoute
   '/home': typeof HomeRoute
+  '/meet-and-assist': typeof MeetAndAssistRoute
+  '/mice': typeof MiceRoute
+  '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
+  '/passport-services': typeof PassportServicesRoute
   '/team': typeof TeamRoute
+  '/travel-insurance': typeof TravelInsuranceRoute
   '/trouvaille': typeof TrouvailleRoute
   '/values': typeof ValuesRoute
   '/visa-services': typeof VisaServicesRoute
+  '/visanix': typeof VisanixRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,12 +167,21 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
   '/faq': typeof FaqRoute
+  '/featured-projects': typeof FeaturedProjectsRoute
+  '/flights-and-stay': typeof FlightsAndStayRoute
+  '/holiday-packages': typeof HolidayPackagesRoute
   '/home': typeof HomeRoute
+  '/meet-and-assist': typeof MeetAndAssistRoute
+  '/mice': typeof MiceRoute
+  '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
+  '/passport-services': typeof PassportServicesRoute
   '/team': typeof TeamRoute
+  '/travel-insurance': typeof TravelInsuranceRoute
   '/trouvaille': typeof TrouvailleRoute
   '/values': typeof ValuesRoute
   '/visa-services': typeof VisaServicesRoute
+  '/visanix': typeof VisanixRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -119,12 +191,21 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
   '/faq': typeof FaqRoute
+  '/featured-projects': typeof FeaturedProjectsRoute
+  '/flights-and-stay': typeof FlightsAndStayRoute
+  '/holiday-packages': typeof HolidayPackagesRoute
   '/home': typeof HomeRoute
+  '/meet-and-assist': typeof MeetAndAssistRoute
+  '/mice': typeof MiceRoute
+  '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
+  '/passport-services': typeof PassportServicesRoute
   '/team': typeof TeamRoute
+  '/travel-insurance': typeof TravelInsuranceRoute
   '/trouvaille': typeof TrouvailleRoute
   '/values': typeof ValuesRoute
   '/visa-services': typeof VisaServicesRoute
+  '/visanix': typeof VisanixRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,12 +216,21 @@ export interface FileRouteTypes {
     | '/contact'
     | '/destinations'
     | '/faq'
+    | '/featured-projects'
+    | '/flights-and-stay'
+    | '/holiday-packages'
     | '/home'
+    | '/meet-and-assist'
+    | '/mice'
+    | '/news'
     | '/partners'
+    | '/passport-services'
     | '/team'
+    | '/travel-insurance'
     | '/trouvaille'
     | '/values'
     | '/visa-services'
+    | '/visanix'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,12 +239,21 @@ export interface FileRouteTypes {
     | '/contact'
     | '/destinations'
     | '/faq'
+    | '/featured-projects'
+    | '/flights-and-stay'
+    | '/holiday-packages'
     | '/home'
+    | '/meet-and-assist'
+    | '/mice'
+    | '/news'
     | '/partners'
+    | '/passport-services'
     | '/team'
+    | '/travel-insurance'
     | '/trouvaille'
     | '/values'
     | '/visa-services'
+    | '/visanix'
   id:
     | '__root__'
     | '/'
@@ -163,12 +262,21 @@ export interface FileRouteTypes {
     | '/contact'
     | '/destinations'
     | '/faq'
+    | '/featured-projects'
+    | '/flights-and-stay'
+    | '/holiday-packages'
     | '/home'
+    | '/meet-and-assist'
+    | '/mice'
+    | '/news'
     | '/partners'
+    | '/passport-services'
     | '/team'
+    | '/travel-insurance'
     | '/trouvaille'
     | '/values'
     | '/visa-services'
+    | '/visanix'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,12 +286,21 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DestinationsRoute: typeof DestinationsRoute
   FaqRoute: typeof FaqRoute
+  FeaturedProjectsRoute: typeof FeaturedProjectsRoute
+  FlightsAndStayRoute: typeof FlightsAndStayRoute
+  HolidayPackagesRoute: typeof HolidayPackagesRoute
   HomeRoute: typeof HomeRoute
+  MeetAndAssistRoute: typeof MeetAndAssistRoute
+  MiceRoute: typeof MiceRoute
+  NewsRoute: typeof NewsRoute
   PartnersRoute: typeof PartnersRoute
+  PassportServicesRoute: typeof PassportServicesRoute
   TeamRoute: typeof TeamRoute
+  TravelInsuranceRoute: typeof TravelInsuranceRoute
   TrouvailleRoute: typeof TrouvailleRoute
   ValuesRoute: typeof ValuesRoute
   VisaServicesRoute: typeof VisaServicesRoute
+  VisanixRoute: typeof VisanixRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -230,11 +347,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/featured-projects': {
+      id: '/featured-projects'
+      path: '/featured-projects'
+      fullPath: '/featured-projects'
+      preLoaderRoute: typeof FeaturedProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flights-and-stay': {
+      id: '/flights-and-stay'
+      path: '/flights-and-stay'
+      fullPath: '/flights-and-stay'
+      preLoaderRoute: typeof FlightsAndStayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/holiday-packages': {
+      id: '/holiday-packages'
+      path: '/holiday-packages'
+      fullPath: '/holiday-packages'
+      preLoaderRoute: typeof HolidayPackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home': {
       id: '/home'
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meet-and-assist': {
+      id: '/meet-and-assist'
+      path: '/meet-and-assist'
+      fullPath: '/meet-and-assist'
+      preLoaderRoute: typeof MeetAndAssistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mice': {
+      id: '/mice'
+      path: '/mice'
+      fullPath: '/mice'
+      preLoaderRoute: typeof MiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partners': {
@@ -244,11 +403,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passport-services': {
+      id: '/passport-services'
+      path: '/passport-services'
+      fullPath: '/passport-services'
+      preLoaderRoute: typeof PassportServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team': {
       id: '/team'
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-insurance': {
+      id: '/travel-insurance'
+      path: '/travel-insurance'
+      fullPath: '/travel-insurance'
+      preLoaderRoute: typeof TravelInsuranceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trouvaille': {
@@ -272,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisaServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/visanix': {
+      id: '/visanix'
+      path: '/visanix'
+      fullPath: '/visanix'
+      preLoaderRoute: typeof VisanixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -282,12 +462,21 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DestinationsRoute: DestinationsRoute,
   FaqRoute: FaqRoute,
+  FeaturedProjectsRoute: FeaturedProjectsRoute,
+  FlightsAndStayRoute: FlightsAndStayRoute,
+  HolidayPackagesRoute: HolidayPackagesRoute,
   HomeRoute: HomeRoute,
+  MeetAndAssistRoute: MeetAndAssistRoute,
+  MiceRoute: MiceRoute,
+  NewsRoute: NewsRoute,
   PartnersRoute: PartnersRoute,
+  PassportServicesRoute: PassportServicesRoute,
   TeamRoute: TeamRoute,
+  TravelInsuranceRoute: TravelInsuranceRoute,
   TrouvailleRoute: TrouvailleRoute,
   ValuesRoute: ValuesRoute,
   VisaServicesRoute: VisaServicesRoute,
+  VisanixRoute: VisanixRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

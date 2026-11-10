@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";import { ServiceDetail,Eyebrow,ScriptWord,headMeta } from "@/components/page-primitives";import corporate from "@/assets/corporate-travel.jpg";
+export const Route=createFileRoute("/mice")({head:()=>headMeta("MICE","End-to-end MICE solutions for corporate meetings, incentive trips, conferences, exhibitions and business events."),component:Mice});
+function Mice(){return <ServiceDetail eyebrow="Trouvaille · MICE" title="Business events, end to" accent="end." copy="End-to-end MICE solutions for corporate meetings, incentive trips, conferences, exhibitions and business events" image={corporate} ctaTitle="Planning a corporate event?" ctaCopy="Tell us about your meeting, incentive trip, conference or exhibition."/>}

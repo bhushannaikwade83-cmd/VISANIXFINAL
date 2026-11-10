@@ -10,6 +10,10 @@ export function PageHero({eyebrow,title,accent,copy,image}:{eyebrow:string,title
 export function CTA({title="Ready to start your visa journey?",copy="Don't let complicated paperwork stand between you and your destination."}:{title?:string,copy?:string}) {
  return <section className="cta-band"><div className="site-container"><Eyebrow>Visa made effortless.</Eyebrow><h2>{title}</h2><p>{copy}</p><Button asChild variant="hero" size="lg"><Link to="/contact">Get visa assistance <ArrowRight /></Link></Button></div></section>;
 }
+export function ServiceDetail({eyebrow,title,accent,copy,image,children,ctaTitle,ctaCopy}:{eyebrow:string,title:string,accent?:string|undefined,copy:string,image?:string|undefined,children?:React.ReactNode,ctaTitle?:string|undefined,ctaCopy?:string|undefined}) {
+ const cta={...(ctaTitle?{title:ctaTitle}:{}),...(ctaCopy?{copy:ctaCopy}:{})};
+ return <><PageHero eyebrow={eyebrow} title={title} copy={copy} {...(accent?{accent}:{})} {...(image?{image}:{})}/>{children}<CTA {...cta}/></>;
+}
 export function BulletList({items}:{items:string[]}) { return <ul className="check-list">{items.map(x=><li key={x}><CheckCircle2 />{x}</li>)}</ul>; }
 export function Meta({title,description}:{title:string,description:string}) { return null; }
 export const headMeta = (title:string, description:string) => ({meta:[{title:`${title} — VisaNix`},{name:"description",content:description},{property:"og:title",content:`${title} — VisaNix`},{property:"og:description",content:description},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]});

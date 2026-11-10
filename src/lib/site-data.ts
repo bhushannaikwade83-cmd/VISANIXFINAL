@@ -1,20 +1,23 @@
-import { BriefcaseBusiness, Building2, FileCheck2, FileText, GraduationCap, Landmark, Map, Plane, ShieldCheck } from "lucide-react";
+import { Anchor, BedDouble, BookOpenCheck, BriefcaseBusiness, CalendarDays, FileCheck2, GraduationCap, Handshake, Map, Palmtree, Plane, ShieldCheck, Stamp, Trophy } from "lucide-react";
 
 export const services = [
-  { icon: Plane, title: "Visa Facilitation", copy: "Professional assistance throughout the visa application process, from understanding requirements to submission and tracking." },
-  { icon: FileText, title: "Documentation Support", copy: "Guidance in preparing, organising and reviewing documents required for your visa application." },
-  { icon: FileCheck2, title: "Visa Application Assistance", copy: "Support with application forms, supporting documents and applicable application requirements." },
-  { icon: Landmark, title: "Apostille Services", copy: "Assistance with Apostille requirements for documents intended for use internationally." },
-  { icon: ShieldCheck, title: "Attestation Services", copy: "Support with document attestation and applicable legalisation procedures." },
-  { icon: BriefcaseBusiness, title: "Corporate Visa Services", copy: "Structured visa assistance for companies, employees, executives and business travellers." },
-  { icon: Building2, title: "Travel Partner Support", copy: "Specialised visa processing and documentation support for travel agencies, tour operators and other travel partners." },
-];
+  { icon: Plane, title: "Visa Facilitation", to: "/visa-services", copy: "Professional assistance throughout the visa application process, from understanding requirements to submission and tracking for Corporates, Travel Partners & Travellers." },
+  { icon: Handshake, title: "Meet and Assist", to: "/meet-and-assist", copy: "Personalised assistance throughout the visa application process, ensuring a smooth, hassle-free, and seamless experience from submission to completion." },
+  { icon: CalendarDays, title: "MICE", to: "/mice", copy: "End-to-end MICE solutions for corporate meetings, incentive trips, conferences, exhibitions and business events" },
+  { icon: Stamp, title: "Apostille and Attestation Services", to: "/apostille-attestation", copy: "Comprehensive assistance with Apostille, document attestation, and legalisation procedures, ensuring documents meet the necessary authentication requirements for international use." },
+  { icon: ShieldCheck, title: "Travel Insurance", to: "/travel-insurance", copy: "Travel insurance solutions offering financial protection and peace of mind throughout your journey." },
+  { icon: BedDouble, title: "Flights and Stay", to: "/flights-and-stay", copy: "End-to-end flight and accommodation arrangements tailored to your travel needs, ensuring comfort, convenience, and seamless travel planning." },
+  { icon: Palmtree, title: "Holiday Packages", to: "/holiday-packages", copy: "Curated holiday packages offering seamless travel experiences, personalised itineraries, and memorable journeys worldwide." },
+  { icon: BookOpenCheck, title: "Passport Services", to: "/passport-services", copy: "Assistance with applicable passport-related services." },
+] as const;
 
 export const visaTypes = [
   { icon: Map, title: "Tourist Visa", copy: "Documentation and application guidance for international holidays and leisure travel." },
   { icon: BriefcaseBusiness, title: "Business Visa", copy: "Support for eligible meetings, conferences, exhibitions, training and corporate visits." },
   { icon: GraduationCap, title: "Student Visa", copy: "Documentation and application guidance for students preparing to study overseas." },
   { icon: FileCheck2, title: "Visa Reapplication", copy: "Review of available refusal information and support preparing a potential future application." },
+  { icon: Anchor, title: "Seaman Visa", copy: "Dedicated visa assistance for seafarers joining vessels, transiting internationally, and travelling for maritime assignments worldwide." },
+  { icon: Trophy, title: "Sports Visa", copy: "Comprehensive visa and travel support for athletes, sports professionals, officials, judges, and adjudicators participating in international sporting events, tournaments, and competitions." },
 ];
 
 export const cares = [
@@ -60,3 +63,8 @@ export const faq = [
 ];
 
 export const disclaimer = "Visa approval is solely at the discretion of the relevant embassy, consulate or immigration authority. VisaNix does not guarantee visa approval, appointment availability or processing timelines.";
+// Add real entries here; sections show a "coming soon" note while these are empty.
+export const brandsWeWorkWith: { name: string }[] = [];
+export const testimonials: { quote: string; name: string; role: string }[] = [];
+export const news: { title: string; copy: string }[] = [];
+export const featuredProjects: { title: string; copy: string }[] = [];
